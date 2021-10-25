@@ -1,3 +1,8 @@
+/*
+This is a project that lets player play TicTacToe
+Last Modified 10/24/21
+By: Kushal Rao 
+*/
 #include <iostream>
 #include <cstring>
 using namespace std;
