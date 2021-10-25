@@ -1,7 +1,7 @@
 #include <iostream>
 #include <cstring>
 using namespace std;
-
+//Methods
 void printBoard(char board[3][3]);
 
 void resetBoard(char (&board)[3][3], int &turn);
@@ -15,17 +15,18 @@ bool checkTie(char (&board)[3][3], int &turn);
 void playAgain(bool &playAgain, int xWins, int oWins, int ties, int &turn);
 
 int main(){
+  //Variables 
   bool playAgainBool = true;
   char board[3][3];
   int turn = 0;
   int xWins = 0;
   int oWins = 0;
   int ties = 0;
-  resetBoard(board, turn);
-  while(playAgainBool){
-    move(board, turn);
-    printBoard(board);
-    if(checkWin(board, turn)){
+  resetBoard(board, turn);//Set up board for play
+  while(playAgainBool){//While players want to play
+    move(board, turn);//Get ready for a move
+    printBoard(board);//Print new move
+    if(checkWin(board, turn)){//Check for win
       if(turn == 0){
         xWins++;
       }
@@ -33,14 +34,14 @@ int main(){
         oWins++;
       }
       playAgain(playAgainBool, xWins, oWins, ties, turn);
-      if(playAgainBool){
-          resetBoard(board, turn);
+      if(playAgainBool){//If players still want to play
+          resetBoard(board, turn);//Reset board
         }
-        else{
-          return 0;
+        else{//Players dont want to play
+          return 0;//Stop the program
         }
     }
-    else if(checkTie(board, turn)){
+    else if(checkTie(board, turn)){//Check for tie
       ties++;
       playAgain(playAgainBool, xWins, oWins, ties, turn);
       if(playAgainBool){
@@ -56,21 +57,21 @@ int main(){
 }
 
 
-void resetBoard(char (&board)[3][3] , int &turn){
+void resetBoard(char (&board)[3][3] , int &turn){//Reset Board
   for(int i = 0; i <3; i++){
     for(int j = 0; j< 3; j++){
-      board[i][j] = ' ';
+      board[i][j] = ' ';//Set all places on the board to empty
       turn = 0;
     }
   }
-  printBoard(board);
+  printBoard(board);//print the board
   
  // cout <<  turn <<endl;
 }
 
 
 
-void printBoard(char board[3][3]){
+void printBoard(char board[3][3]){//Print board in proper array format
   cout << " 123" << endl;
   cout << "a" << board[0][0] << board[0][1] << board[0][2] << endl;
   cout << "b" << board[1][0] << board[1][1] << board[1][2] << endl;
@@ -78,14 +79,14 @@ void printBoard(char board[3][3]){
 }
 
 
-void move(char (&board)[3][3], int &turn){
+void move(char (&board)[3][3], int &turn){//Get a move
   char input[3];
-  int x = -1;
-  int y = -1;
+  int x = -1;//Initialize x to an imposssible number
+  int y = -1;//Initialize y to an impossible number
   bool notAnInput = true;
   cout << "Input a move (ex: a1)" << endl;
   cin >> input;
-  while(notAnInput){
+  while(notAnInput){//check if input is valid
      if(input[0] == 'a'){
         x = 0;
       }
@@ -113,24 +114,24 @@ void move(char (&board)[3][3], int &turn){
       }
     }
 
-    if(notAnInput == true){
+    if(notAnInput == true){//prompt user for a proper move
       cout << "Input a valid move to an empty spot(ex: a1)" << endl;
       cin >> input;
       cout << input;
     }
     notAnInput = false;
   }
-  if(turn == 0){
+  if(turn == 0){//Set move to X
     board[x][y] = 'X';
     return;
   }
-  if(turn == 1){
+  if(turn == 1){//Set move to y
     board[x][y] = 'O';
     return;
   }
 }
 
-bool checkWin(char (&board)[3][3], int &turn){
+bool checkWin(char (&board)[3][3], int &turn){//Check win
   char turnChar = ' ';  
   if(turn == 0){
     turnChar = 'X';
@@ -165,7 +166,7 @@ bool checkWin(char (&board)[3][3], int &turn){
     return false;
 }
 
-bool checkTie(char (&board)[3][3], int &turn){
+bool checkTie(char (&board)[3][3], int &turn){//Cehck if all places on the board are filled up
   if(turn == 0){
     turn = 1;
   }
@@ -173,23 +174,23 @@ bool checkTie(char (&board)[3][3], int &turn){
     turn = 0;
   }
   for (int i = 0 ; i < 3; i++) {
-			for (int j= 0 ; j < 3; j++) {
-				if (board[i][j] == ' ') {
-					return false;
-				}
-			}
+	for (int j= 0 ; j < 3; j++) {
+		if (board[i][j] == ' ') {
+			return false;
 		}
-		return true;
+	}
+  }
+return true;
 }
 
-void playAgain(bool &playAgainBool, int xWins, int oWins, int ties, int &turn){
+void playAgain(bool &playAgainBool, int xWins, int oWins, int ties, int &turn){//Check if player wants to win
   char input[2];
-  cout << "X wins: " << xWins << endl;
-  cout << "O wins: " << oWins << endl;
+  cout << "X wins: " << xWins << endl;//print X wins
+  cout << "O wins: " << oWins << endl;//print O wins
   cout << "Ties: " << ties << endl;
   cout << "Do you want to play again(y/n)" << endl;
   cin >> input;
-  if(input[0] == 'n'){
+  if(input[0] == 'n'){//Check if user wants to play
     playAgainBool = false;
   }
 }
